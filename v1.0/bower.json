@@ -1,0 +1,25 @@
+{
+  "name": "polymer-migration-demo",
+  "version": "1.0.0",
+  "authors": [
+    "Josh Crowther <jshcrowthe@gmail.com>"
+  ],
+  "description": "An example of porting an element from Polymer 0.5 -> 1.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~1.0.2",
+    "iron-image": "PolymerElements/iron-image#~1.0.0",
+    "iron-ajax": "PolymerElements/iron-ajax#~1.0.0",
+    "layout": "Polymer/layout"
+  },
+  "resolutions": {
+    "polymer": "^1.0.0"
+  }
+}

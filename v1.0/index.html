@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Polymer 1.0 Demo</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <script>
+    if ('registerElement' in document               &&
+        'createShadowRoot' in HTMLElement.prototype &&
+        'import' in document.createElement('link')  &&
+        'content' in document.createElement('template')) {
+      console.log("Using WC Enabled Browser");
+    } else {
+      document.write('<script src="components/webcomponentsjs/webcomponents-lite.js"><\/script>');
+    }
+  </script>
+  <link rel="import" href="components/polymer/polymer.html">
+  <link rel="import" href="components/iron-ajax/iron-ajax.html">
+  <link rel="import" href="components/pokemon-card/pokemon-card.html">
+  <style>
+    pokemon-card {
+      margin-bottom:10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <h1>Polymer 1.0 Demo</h1>
+  </div>
+  <div class="row">
+  <template id="pokemon-list" is='dom-bind'>
+    <!-- Request Pokemon -->
+    <iron-ajax
+     auto
+     url="http://pokeapi.co/api/v1/pokemon?limit=15"
+     method="GET"
+     handleAs="json"
+     last-response="{{data}}"></iron-ajax>
+    <template is="dom-repeat" items="{{data.objects}}" as='pokemon'>
+      <pokemon-card pokemon="{{pokemon}}"></pokemon-card>
+    </template>
+  </template>
+
+  </div>
+</div>
+</body>
+</html>
+

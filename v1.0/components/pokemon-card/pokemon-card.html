@@ -1,0 +1,151 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../iron-image/iron-image.html">
+
+<dom-module id='pokemon-card'>
+  <style>
+    :host {
+      display:block;
+      padding:10px;
+      border:2px solid #e0e0e0;
+      border-radius: 4px;
+    }
+    h1 {
+      padding:0;
+      margin:0;
+    }
+    p {
+      padding: 0;
+      margin: 0;
+    }
+    .pokemon-attributes {
+      margin:0 0 0 10px;
+    }
+
+    .combat-attributes {
+      width: 85px;
+      text-align: left;
+    }
+
+    .water-gradient {
+      background: -moz-linear-gradient(left,  rgba(30,87,153,1) 0%, rgba(255,255,255,0.35) 65%, rgba(255,255,255,0) 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(30,87,153,1)), color-stop(65%,rgba(255,255,255,0.35)), color-stop(100%,rgba(255,255,255,0)));
+      background: -webkit-linear-gradient(left,  rgba(30,87,153,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -o-linear-gradient(left,  rgba(30,87,153,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -ms-linear-gradient(left,  rgba(30,87,153,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: linear-gradient(to right,  rgba(30,87,153,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#00ffffff',GradientType=1 );
+    }
+
+    .normal-gradient {
+      background: -moz-linear-gradient(left,  rgba(140,140,140,1) 0%, rgba(255,255,255,0.35) 65%, rgba(255,255,255,0) 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(140,140,140,1)), color-stop(65%,rgba(255,255,255,0.35)), color-stop(100%,rgba(255,255,255,0)));
+      background: -webkit-linear-gradient(left,  rgba(140,140,140,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -o-linear-gradient(left,  rgba(140,140,140,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -ms-linear-gradient(left,  rgba(140,140,140,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: linear-gradient(to right,  rgba(140,140,140,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8c8c8c', endColorstr='#00ffffff',GradientType=1 );
+    }
+
+    .fire-gradient {
+      background: -moz-linear-gradient(left,  rgba(211,31,0,1) 0%, rgba(255,255,255,0.35) 65%, rgba(255,255,255,0) 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(211,31,0,1)), color-stop(65%,rgba(255,255,255,0.35)), color-stop(100%,rgba(255,255,255,0)));
+      background: -webkit-linear-gradient(left,  rgba(211,31,0,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -o-linear-gradient(left,  rgba(211,31,0,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -ms-linear-gradient(left,  rgba(211,31,0,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: linear-gradient(to right,  rgba(211,31,0,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d31f00', endColorstr='#00ffffff',GradientType=1 );
+    }
+
+    .bug-gradient {
+      background: -moz-linear-gradient(left,  rgba(0,150,7,1) 0%, rgba(255,255,255,0.35) 65%, rgba(255,255,255,0) 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,150,7,1)), color-stop(65%,rgba(255,255,255,0.35)), color-stop(100%,rgba(255,255,255,0)));
+      background: -webkit-linear-gradient(left,  rgba(0,150,7,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -o-linear-gradient(left,  rgba(0,150,7,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -ms-linear-gradient(left,  rgba(0,150,7,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: linear-gradient(to right,  rgba(0,150,7,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#009607', endColorstr='#00ffffff',GradientType=1 );
+    }
+
+    .flying-gradient {
+      background: -moz-linear-gradient(left,  rgba(238,255,0,1) 0%, rgba(255,255,255,0.35) 65%, rgba(255,255,255,0) 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(238,255,0,1)), color-stop(65%,rgba(255,255,255,0.35)), color-stop(100%,rgba(255,255,255,0)));
+      background: -webkit-linear-gradient(left,  rgba(238,255,0,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -o-linear-gradient(left,  rgba(238,255,0,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -ms-linear-gradient(left,  rgba(238,255,0,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: linear-gradient(to right,  rgba(238,255,0,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeff00', endColorstr='#00ffffff',GradientType=1 );
+    }
+
+    .poison-gradient {
+      background: -moz-linear-gradient(left,  rgba(127,0,178,1) 0%, rgba(255,255,255,0.35) 65%, rgba(255,255,255,0) 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(127,0,178,1)), color-stop(65%,rgba(255,255,255,0.35)), color-stop(100%,rgba(255,255,255,0)));
+      background: -webkit-linear-gradient(left,  rgba(127,0,178,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -o-linear-gradient(left,  rgba(127,0,178,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: -ms-linear-gradient(left,  rgba(127,0,178,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      background: linear-gradient(to right,  rgba(127,0,178,1) 0%,rgba(255,255,255,0.35) 65%,rgba(255,255,255,0) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7f00b2', endColorstr='#00ffffff',GradientType=1 );
+    }
+  </style>
+  <template>
+    <div id="wrap" class="layout horizontal justified center">
+      <div class="layout horizontal center">
+        <template is="dom-if" if="{{_hasSprite(pokemon)}}">
+          <iron-ajax
+           auto
+           url="{{_getSpriteURI(pokemon)}}"
+           method="GET"
+           handleAs="json"
+           last-response="{{sprite}}"></iron-ajax>
+          <iron-image 
+           style="width:95px; height:95px; margin:5px; border-radius:50%; border: 2px solid lightgray; background: #fff;" 
+           sizing="cover" 
+           src="{{_getSpriteImage(sprite.image)}}"></iron-image>
+        </template>
+        <div class="pokemon-attributes">
+          <h1>{{pokemon.name}}</h1>
+          <p><label>Height: </label><span>{{pokemon.height}}</span>ft <label>Weight: </label><span>{{pokemon.weight}}</span>lbs</p>
+        </div>
+      </div>
+      <div class="combat-attributes">
+        <p><label>Attack: </label><span>{{pokemon.attack}}</span></p>
+        <p><label>Defense: </label><span>{{pokemon.defense}}</span></p>
+      </div>
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: 'pokemon-card',
+    properties: {
+      pokemon: Object
+    },
+    ready: function() {
+      this.$.wrap.classList.add(this.getType(this.pokemon) + '-gradient');
+    },
+    getType: function(pokemon) {
+      if (!pokemon || !Array.isArray(pokemon.types)) return 'normal';
+      return pokemon.types[0].name;
+    },
+    _hasSprite: function(pokemon) {
+      if (!pokemon || !Array.isArray(pokemon.sprites)) return false;
+      return pokemon.sprites.length > 0;
+    },
+    _getSpriteURI: function(pokemon) {
+      return 'http://pokeapi.co' + pokemon.sprites[0].resource_uri;
+    },
+    _getSpriteImage: function(imageLocation) {
+      console.log('Getting Image');
+      return 'http://pokeapi.co' + imageLocation;
+    }
+  });
+</script>
+
+<polymer-element name="pokemon-card" attributes="pokemon">
+  <template>
+    
+  </template>
+  <script>
+    
+  </script>
+</polymer-element>
